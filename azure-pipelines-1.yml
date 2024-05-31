@@ -1,0 +1,22 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+pool:
+  name: Test
+  demands: npm
+
+steps:
+- task: uipath.vsts-uipath-package.uipath-install-platform.UiPathInstallPlatform@3
+  displayName: 'UiPath Install Platform'
+
+- task: uipath.vsts-uipath-package.uipath-pack.UiPathPack@3
+  displayName: 'UiPath Pack'
+  inputs:
+    versionType: AutoVersion
+    projectJsonPath: project.json
+    splitOutput: false
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
